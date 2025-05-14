@@ -1,19 +1,36 @@
-<div class="flex mt-5 flex-col md:flex-row md:space-x-4">
-  <div class="w-full mb-4 md:w-56">
-    <ul class="text-center md:text-left">
-      <li>
-        <a routerLink="/">All</a>
-      </li>
-      @for (category of categories(); track category) {
+<button (click)="reloadProduct()">reload</button>
+
+@if (productResource.isLoading()) {
+  <div>
+    <p>Loading...</p>
+  </div>
+} @else {
+  <div class="flex mt-5 flex-col md:flex-row md:space-x-4">
+    <div class="w-full mb-4 md:w-56">
+      <p>
+        {{ catrgoriesResourceWithoutRxjs.isLoading() ? 'Cargando...' : '' }}
+      </p>
+      <button (click)="reloadCategories()">Reload Categories</button>
+      <ul class="text-center md:text-left">
         <li>
-          <a routerLink="/category/{{ category.slug }}">{{ category.name }}</a>
+          <a routerLink="/">All</a>
         </li>
+        @for (
+          category of catrgoriesResourceWithoutRxjs.value();
+          track category
+        ) {
+          <li>
+            <a routerLink="/category/{{ category.slug }}">
+              {{ category.name }}
+            </a>
+          </li>
+        }
+      </ul>
+    </div>
+    <div class="grid grid-cols-2 gap-8 w-full md:grid-cols-4">
+      @for (product of productResource.value(); track product) {
+        <app-product [product]="product" (addToCart)="addToCart($event)" />
       }
-    </ul>
+    </div>
   </div>
-  <div class="grid grid-cols-2 gap-8 w-full md:grid-cols-4">
-    @for (product of products(); track product) {
-      <app-product [product]="product" (addToCart)="addToCart($event)" />
-    }
-  </div>
-</div>
+}
