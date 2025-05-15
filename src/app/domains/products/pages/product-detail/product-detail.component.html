@@ -1,4 +1,4 @@
-@let data = product();
+@let data = productRs.value();
 @let imgCover = cover();
 
 @if (data && imgCover) {
@@ -51,4 +51,6 @@
       </button>
     </div>
   </div>
+  <app-related [slug]="data.slug" />
 }
+
