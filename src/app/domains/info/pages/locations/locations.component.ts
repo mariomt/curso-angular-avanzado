@@ -1,4 +1,10 @@
-import { afterNextRender, Component, inject, signal } from '@angular/core';
+import {
+  afterNextRender,
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  signal,
+} from '@angular/core';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { GeolocalitationService } from '@shared/services/geolocalitation.service';
 
@@ -6,6 +12,7 @@ import { GeolocalitationService } from '@shared/services/geolocalitation.service
   selector: 'app-locations',
   imports: [],
   templateUrl: './locations.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export default class LocationsComponent {
   $origin = signal('');
